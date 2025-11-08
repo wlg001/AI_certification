@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+
+# Word vectors and models
+*.model
+*.vector
+sgns.weibo.word
+small_weibo_vectors.txt
+
+# Environment
+.env
+.venv
+venv/
+ENV/
