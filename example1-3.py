@@ -1,7 +1,7 @@
 from gensim.models import KeyedVectors
 import os
 
-def create_small_model(input_file, output_file, vocab_size=20000):
+def create_small_model(input_file, output_file, vocab_size=40000):
     print(f"正在从{input_file}创建小型模型...")
     wv = KeyedVectors.load_word2vec_format(input_file, binary=False)
     # 获取词频排序后的前N个词
@@ -13,18 +13,18 @@ def create_small_model(input_file, output_file, vocab_size=20000):
     for word in words_to_keep:
         limited_wv.add_vector(word, wv[word])
     limited_wv.fill_norms()
-    limited_wv.save_word2vec_format(output_file, binary=False)
+    limited_wv.save_word2vec_format(output_file, binary=True)
     print(f"已生成小型模型：{output_file}")
     return limited_wv
 
 # 文件路径
-small_model_path = 'small_weibo_vectors.txt'
+small_model_path = 'small_weibo_vectors.bin'
 full_model_path = 'sgns.weibo.word'
 
 # 加载或创建模型
 if os.path.exists(small_model_path):
     print("找到小型模型，正在加载...")
-    wv = KeyedVectors.load_word2vec_format(small_model_path, binary=False)
+    wv = KeyedVectors.load_word2vec_format(small_model_path, binary=True)
 elif os.path.exists(full_model_path):
     print("未找到小型模型，但找到完整模型，将创建小型模型...")
     wv = create_small_model(full_model_path, small_model_path)
